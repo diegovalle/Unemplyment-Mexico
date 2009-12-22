@@ -13,9 +13,9 @@ To run
 
 Output
 -------
-* A png chart of the unemployment rate from 2005.I–2009.I
+* A png chart of the unemployment rate from 2005.I–2009.III
 * A png choropleth of the state unemployment rate from 2007.I-2009.III
-* A png with bubbles at the center of each state representing the unemployment rate
+* Same data as above except with bubbles at the center of each state representing the unemployment rate
 
 Author
 -----
