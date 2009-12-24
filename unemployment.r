@@ -21,6 +21,7 @@ mx <- readShapeSpatial(map.icesi)
 mx.map <- fortify(mx, region = "NAME")
 
 un <- read.csv("unemployment.csv")
+total <- subset(un, un$States == "Total")
 #Third trimester 2009: 6.2%
 ggplot(melt(subset(un, un$States == "Total")),
       aes(substring(variable, 2), I(value/100), group = 1)) +
@@ -66,9 +67,13 @@ un.m$variable <- substring(un.m$variable,  2)
 un.m <- un.m[un.m$variable %in% c("2007.I", "2007.II","2007.III","2007.IV",
                                   "2008.I", "2008.II","2008.III","2008.IV",
                                   "2009.I","2009.II","2009.III"), ]
+un.m$variable <- paste(un.m$variable, as.character((rep(total[11:ncol(total)], 
+                       each = 32)), sep = " – ") 
+un.m$variable <- paste(un.m$variable, "%", sep = "")
 mid_range <- function(x) mean(range(x))
 centres <- ddply(mx.map, c("id"), summarise,
                  lat = mid_range(lat), long = mid_range(long))
+
 bubble <- merge(un.m, centres, by.x = "States.ICESI", by.y = "id")
 ggplot(bubble, aes(long, lat)) +
        geom_polygon(aes(group = group), fill = NA,
