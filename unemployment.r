@@ -82,7 +82,7 @@ ggplot(bubble, aes(long, lat)) +
        opts(title = "Unemployment rate in Mexico (2007–2009), by State") +
        scale_y_continuous(breaks = NA) +
        scale_x_continuous(breaks = NA) + xlab("") + ylab("") 
-dev.print(png,"Unemployment Rate Bubbles.png", width=800, height=700)
+dev.print(png,"Unemployment Rate Bubbles.png", width=900, height=600)
 #mmmh
 
 
