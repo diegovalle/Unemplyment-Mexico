@@ -1,19 +1,15 @@
-#pretty maps of the unemployment rate
+ï»¿#pretty maps of the unemployment rate
 library(ggplot2)
 library(maptools)     # loads sp library too
 library(RColorBrewer) # creates nice color schemes
 library(classInt)     # finds class intervals for continuous variables
 library(reshape)
 library(sp)
-try_require("maps")
+library(maps)
+gpclibPermit()
 
-####################################################################
-#Change the directories as appropiate
-wd <- "C:/Documents and Settings/Diego/My Documents/docs/personal/Math/unemployment"
-map.icesi <- "../maps/Mexico.shp"
-#########################################################################
+map.icesi <- "map/Mexico.shp"
 
-setwd(wd)
 
 #WTF, according to the ICESI there's a state called "Baja California Norte"
 #lol, the LHC must have caused the download to come from a parallel universe
@@ -28,7 +24,7 @@ ggplot(melt(subset(un, un$States == "Total")),
       geom_line() + ylab("")+ xlab("Quarter") +
       opts(title = "Unemployment Rate in Mexico") +
       scale_y_continuous(formatter = "percent") +
-      scale_x_discrete(breaks = 
+      scale_x_discrete(breaks =
                     c("2005.I","2006.I","2007.I","2007.I","2008.I","2009.I"))
 dev.print(png,"Unemployment Rate.png", width=600, height=600)
 
@@ -49,13 +45,13 @@ un.m <- un.m[un.m$variable %in% c("2007.I", "2007.II","2007.III","2007.IV",
 ggplot(un.m, aes(long, lat)) +
        geom_polygon(aes(group = group, fill = I(value/100)), color = I("white")) +
        facet_wrap(~ variable, ncol = 4) +
-       theme_bw() + 
+       theme_bw() +
        coord_map(project="gilbert") +
-       scale_fill_continuous("Unemployment", formatter="percent", 
+       scale_fill_continuous("Unemployment", formatter="percent",
                              low="yellow", high="red", limits=c(.01,.1)) +
-       opts(title = "Unemployment rate in Mexico (2007–2009), by State") +
+       opts(title = "Unemployment rate in Mexico (2007â€“2009), by State") +
        scale_y_continuous(breaks = NA) +
-       scale_x_continuous(breaks = NA) + xlab("") + ylab("") 
+       scale_x_continuous(breaks = NA) + xlab("") + ylab("")
 dev.print(png,"Unemployment in Mexico, by state.png", width=800, height=700)
 
 #People tend to pay attention to the big states when we fill them
@@ -67,8 +63,8 @@ un.m$variable <- substring(un.m$variable,  2)
 un.m <- un.m[un.m$variable %in% c("2007.I", "2007.II","2007.III","2007.IV",
                                   "2008.I", "2008.II","2008.III","2008.IV",
                                   "2009.I","2009.II","2009.III"), ]
-un.m$variable <- paste(un.m$variable, as.character(rep(total[11:ncol(total)], 
-                       each = 32)), sep = " – ") 
+un.m$variable <- paste(un.m$variable, as.character(rep(total[11:ncol(total)],
+                       each = 32)), sep = " â€“ ")
 un.m$variable <- paste(un.m$variable, "%", sep = "")
 mid_range <- function(x) mean(range(x))
 centres <- ddply(mx.map, c("id"), summarise,
@@ -80,13 +76,13 @@ ggplot(bubble, aes(long, lat)) +
                     color = I("black"), data = mx.map) +
        theme_bw() +
        geom_point(aes(color = I(value/100)), size = 4) +
-       scale_colour_gradient("Unemployment", formatter="percent", 
+       scale_colour_gradient("Unemployment", formatter="percent",
                              low="yellow", high="red", limits=c(.01,.1)) +
        facet_wrap(~ variable) +
        coord_map(project="gilbert") +
-       opts(title = "Unemployment rate in Mexico (2007–2009), by State") +
+       opts(title = "Unemployment rate in Mexico (2007â€“2009), by State") +
        scale_y_continuous(breaks = NA) +
-       scale_x_continuous(breaks = NA) + xlab("") + ylab("") 
+       scale_x_continuous(breaks = NA) + xlab("") + ylab("")
 dev.print(png,"Unemployment Rate Bubbles.png", width=900, height=600)
 #mmmh
 
