@@ -9,7 +9,7 @@ Requirements
 To run
 -------
 * Be sure to change the working directory to whatever it is in your machine
-* Specify the location of the map from the ICESI
+* Specify the location of the [map](http://www.icesi.org.mx/documentos/encuestas/tDinamica/mexico.rar) from the ICESI
 
 Output
 -------
