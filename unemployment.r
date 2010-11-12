@@ -8,12 +8,19 @@ library(sp)
 library(maps)
 gpclibPermit()
 
-map.icesi <- "map/Mexico.shp"
+map.icesi <- "map/México.shp"
 
 
 #WTF, according to the ICESI there's a state called "Baja California Norte"
 #lol, the LHC must have caused the download to come from a parallel universe
-mx <- readShapeSpatial(map.icesi)
+if (!file.exists(map.icesi)) {
+  cat("Download the shp file of Mexico from http://www.icesi.org.mx/documentos/encuestas/tDinamica/mexico.rar\n")
+  cat("Place it in the map subdirectory\n")
+  stop("Map not found")
+} else {
+    mx <- readShapeSpatial(map.icesi)
+}
+
 mx.map <- fortify(mx, region = "NAME")
 
 un <- read.csv("unemployment.csv")
