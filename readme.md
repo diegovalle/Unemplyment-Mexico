@@ -19,4 +19,4 @@ Output
 
 Author
 -----
-[Diego Valle] (http://github.com/diegovalle)
+[Diego Valle](http://github.com/diegovalle)
